@@ -1,7 +1,12 @@
-<!-- templates/home.html -->
-<h1>Entity Types</h1>
-<ul>
-{% for entity in entities %}
-  <li><a href="{{ url_for('entity_dashboard', entity_type=entity) }}">{{ entity }}</a></li>
-{% endfor %}
-</ul>
+{% extends "base.html" %}
+{% block title %}Entity Types{% endblock %}
+{% block content %}
+  <h1 class="mb-4">Entity Types</h1>
+  <div class="list-group">
+    {% for entity in entities %}
+      <a href="{{ url_for('entity_dashboard', entity_type=entity) }}" class="list-group-item list-group-item-action">
+        {{ entity | title }}
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}
