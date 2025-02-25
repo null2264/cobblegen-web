@@ -1,0 +1,7 @@
+<!-- templates/home.html -->
+<h1>Entity Types</h1>
+<ul>
+{% for entity in entities %}
+  <li><a href="{{ url_for('entity_dashboard', entity_type=entity) }}">{{ entity }}</a></li>
+{% endfor %}
+</ul>
