@@ -50,7 +50,7 @@ Each subfolder in the `/data` directory represents a different "object type" tha
 
 1. Install the package:
    ```
-   npm install bare-minimum-framework
+   pip install -r requirements.txt
    ```
 
 2. Create your data folder structure with template files:
@@ -62,7 +62,7 @@ Each subfolder in the `/data` directory represents a different "object type" tha
 
 3. Start the server:
    ```
-   npx bare-minimum-start --data-dir ./data
+   flask --app src.app run
    ```
 
 4. Navigate to `http://localhost:3000` and start managing your data
