@@ -62,10 +62,10 @@ Each subfolder in the `/data` directory represents a different "object type" tha
 
 3. Start the server:
    ```
-   flask --app src.app run
+   flask --app webapp.app run
    ```
 
-4. Navigate to `http://localhost:3000` and start managing your data
+4. Navigate to `http://localhost:5000` and start managing your data
 
 ## Template Format
 
@@ -73,23 +73,31 @@ The `template.json` file uses a simple format to define editable fields:
 
 ```json
 {
-  "name": "Character",
-  "fields": {
-    "id": { "type": "string", "editable": false },
-    "name": { "type": "string", "label": "Character Name" },
-    "imageUrl": { "type": "image", "label": "Character Portrait" },
-    "stats": {
-      "strength": { "type": "number", "min": 0, "max": 100 },
-      "intelligence": { "type": "number", "min": 0, "max": 100 }
-    }
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "path": "data", 
+    "fields": {
+      "avatar": {
+        "type": "string",
+        "format": "uri",
+        "description": "Character avatar (URL)"
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": { "type": "string" },
+      "personality": { "type": "string" },
+      "creator_notes": { "type": "string" }
+    },
+    "required": ["avatar", "name"]
   }
-}
 ```
 
 ## Limitations
 
 - No authentication or user management (if you need those,  you're using the wrong tool)
-- Limited field types and customization (will add more)
+- Limited field types and customization (literally only works with string, will add int and float support)
 - Not designed for high-volume data (will add standard database reader)
 - No relational data support (same as above)
 - Simple, functional UI with zero frills 
