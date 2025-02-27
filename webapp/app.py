@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import json
 from webapp.form_generator import generate_form_fields, nest_data
-app = Flask(__name__)
+app = Flask(__name__, static_folder = '../static')
 app.config['UPLOAD_FOLDER'] = 'static/thumbs'
 import uuid
 # --------------------------
