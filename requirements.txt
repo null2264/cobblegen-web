@@ -1,5 +1,0 @@
-Flask       
-Jinja2 
-Pillow
-requests
-jsonschema
