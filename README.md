@@ -2,6 +2,12 @@
 
 A configurator webapp for [CobbleGen (MC) Mod](https://github.com/null2264/CobbleGen).
 
+## Usage
+
+```sh
+uv run -- flask --app webapp run
+```
+
 ## License
 
 This project is built based on [Bare Minimum Framework](https://github.com/Iteranya/bare-minimum-framework), which licensed under MIT (and GPL-3.0).
