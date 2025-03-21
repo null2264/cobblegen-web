@@ -1,0 +1,25 @@
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for entity in entities %}
+  <div class="col">
+    <div class="card h-100">
+      <img src="{{ entity.avatar }}" class="card-img-top" alt="{{ entity.name }}" style="object-fit: cover; height: 200px;">
+      <div class="card-body">
+        <h5 class="card-title">{{ entity.name }}</h5>
+        <p class="card-text">{{ entity.description }}</p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <a href="{{ url_for('edit_entity', entity_type=entity_type, entity_name=entity.name) }}" class="btn btn-secondary btn-sm">
+          Edit
+        </a>
+        <form onsubmit='doDelete(event, "{{ entity.name }}")'>
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="col">
+    <em>There's no defined generators.</em>
+  </div>
+  {% endfor %}
+</div>

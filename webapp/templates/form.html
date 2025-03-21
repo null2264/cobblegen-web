@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %} - {{ "Create" if not entity_name else "Edit" }} {{ title }}{% endblock %}
+{% block content %}
+  <h1 class="mb-4">{{ "Create" if not entity_name else "Edit" }} {{ title }}</h1>
+  <div hx-trigger="load" hx-get="{{ url_for('create_entity' if not entity_name else 'edit_entity', entity_type=entity_type) }}" hx-vals='js:{"entity": getGenerator()}' hx-swap="outerHTML">Loading...</div>
+{% endblock %}
+{% block body_after %}
+<script>
+  function getGenerator() {
+    return localStorage.getItem("ref-gen:{{ entity_type }}:{{ entity_name }}", "{}");
+  }
+  function doSubmit(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+
+    // Do a bit of work to convert the entries to a plain JS object
+    const value = Object.fromEntries(data.entries());
+
+    {% if entity_name %}
+    localStorage.setItem("ref-gen:{{ entity_type }}:{{ entity_name }}", JSON.stringify(value));
+    {% else %}
+    localStorage.setItem(`ref-gen:{{ entity_type }}:${crypto.randomUUID()}`, JSON.stringify(value));
+    {% endif %}
+
+    window.location.replace("/{{ entity_type }}");
+  }
+</script>
+{% endblock %}

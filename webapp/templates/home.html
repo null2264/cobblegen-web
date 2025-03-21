@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Entity Types{% endblock %}
+{% block title %} - Generator Types{% endblock %}
 {% block content %}
-  <h1 class="mb-4">Entity Types</h1>
+  <h1 class="mb-4">Generator Types</h1>
   <div class="list-group">
     {% for entity in entities %}
-      <a href="{{ url_for('entity_dashboard', entity_type=entity) }}" class="list-group-item list-group-item-action">
-        {{ entity | title }}
+      <a href="{{ url_for('entity_dashboard', entity_type=entity.name) }}" class="list-group-item list-group-item-action">
+        {{ entity.title }}
       </a>
     {% endfor %}
   </div>

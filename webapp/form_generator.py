@@ -11,34 +11,28 @@ def process_image(file_stream) -> str:
     img.save(thumb_path)
     return f"/{thumb_path}"
 
+
 # Missing Piece 3: Default Values
 def apply_defaults(template):
     defaults = {}
-    for field, config in template["fields"].items():
+    for field, config in template["properties"].items():
         if "default" in config:
             defaults[field] = config["default"]
     return defaults
 
 
 def generate_form_fields(template):
-    path = template.get("path", "")  # "data" → "data.whatever.thing"
     fields = []
-    for field, config in template["fields"].items():
-        full_key = f"{path}.{field}" if path else field  # "data.avatar"
+    for field, config in template["properties"].items():
+        type_ = config.get("type", "string")
+        if type_ == "string":
+            format = config.get("format", "")
+            if format == "uri":
+                type_ = "file"
+
         fields.append({
-            "key": full_key,
+            "key": field,
             "label": config.get("description", field),
-            "type": "file" if "uri" in config.get("format", "") else "text"
+            "type": type_
         })
     return fields
-
-# Later in your CRUD routes:
-def nest_data(flat_data, path_separator="."):
-    nested = {}
-    for key, value in flat_data.items():
-        parts = key.split(path_separator)
-        current = nested
-        for part in parts[:-1]:
-            current = current.setdefault(part, {})
-        current[parts[-1]] = value
-    return nested

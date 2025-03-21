@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "CobbleGen",
     "type": "object",
-    "path": "data", 
-    "fields": {
+    "properties": {
       "avatar": {
         "type": "string",
         "format": "uri",
@@ -14,7 +14,8 @@
       },
       "description": { "type": "string" },
       "personality": { "type": "string" },
-      "creator_notes": { "type": "string" }
+      "creator_notes": { "type": "string" },
+      "your_mom": { "type": "number" }
     },
     "required": ["avatar", "name"]
   }
