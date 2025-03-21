@@ -33,6 +33,7 @@ def generate_form_fields(template):
         fields.append({
             "key": field,
             "label": config.get("description", field),
-            "type": type_
+            "type": type_,
+            "required": config.get("required", False),
         })
     return fields
