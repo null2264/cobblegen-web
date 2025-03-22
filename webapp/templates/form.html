@@ -25,22 +25,30 @@
   function doSubmit(event) {
     event.preventDefault();
 
-    const data = new FormData(event.target);
+    const data = {};
+    const formElements = event.target.querySelectorAll("input, select, textarea");
 
-    // Do a bit of work to convert the entries to a plain JS object
-    let value = {};
-    data.forEach(function(v, k) {
-      if (v === undefined || v === null || v === "") return;  // Omit empty value
-      // Naively try to turn every value to number
-      // FIXME: Only do so if input box type is number
-      value[k] = toNum(v);
+    formElements.forEach(element => {
+      if (!element.name) return;
+
+      if (element.type === "checkbox") {
+        data[element.name] = element.checked;
+      } else if (element.type === "radio") {
+        if (element.checked) {
+          data[element.name] = element.value;
+        }
+      } else if (element.type === "select-multiple") {
+        const selectedValues = Array.from(element.selectedOptions).map(option => option.value);
+        data[element.name] = selectedValues;
+      } else if (element.value != "") {
+        data[element.name] = element.type === "number" ? toNum(element.value) : element.value;
+      }
     });
-    console.log(data);
 
     {% if entity_name %}
-    localStorage.setItem("ref-gen:{{ entity_type }}:{{ entity_name }}", JSON.stringify(value));
+    localStorage.setItem("ref-gen:{{ entity_type }}:{{ entity_name }}", JSON.stringify(data));
     {% else %}
-    localStorage.setItem(`ref-gen:{{ entity_type }}:${crypto.randomUUID()}`, JSON.stringify(value));
+    localStorage.setItem(`ref-gen:{{ entity_type }}:${crypto.randomUUID()}`, JSON.stringify(data));
     {% endif %}
 
     window.location.replace("/{{ entity_type }}");
