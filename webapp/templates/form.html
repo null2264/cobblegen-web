@@ -41,7 +41,15 @@
         const selectedValues = Array.from(element.selectedOptions).map(option => option.value);
         data[element.name] = selectedValues;
       } else if (element.value != "") {
-        data[element.name] = element.type === "number" ? toNum(element.value) : element.value;
+        let value = element.value;
+        if (element.type === "number") {
+          value = toNum(value);
+        } else if (element.classList.contains("input-type-object")) {
+          try {
+            value = Hjson.parse(value);
+          } catch {}
+        }
+        data[element.name] = value;
       }
     });
 

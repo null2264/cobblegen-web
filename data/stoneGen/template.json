@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "StoneGen",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "required": true
+        },
+        "weight": {
+            "type": "number",
+            "required": true,
+            "default": 100
+        },
+        "minY": { "type": "integer" },
+        "maxY": { "type": "integer" },
+        "dimensions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "excludedDimensions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "neighbours": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "excludedBiomes": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "biomes": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": ["avatar", "name"]
+}
