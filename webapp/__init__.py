@@ -6,7 +6,6 @@ from webapp.form_generator import generate_form_fields
 
 
 app = Flask(__name__, static_folder = '../static')
-app.config['UPLOAD_FOLDER'] = 'static/thumbs'
 
 def is_htmx() -> bool:
     return request.headers.get("HX-Request", type=bool) or False
