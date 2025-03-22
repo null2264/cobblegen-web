@@ -8,7 +8,7 @@
         <div class="d-flex align-items-center highlight-toolbar ps-3 pe-2 py-1 border-0 border-top border-bottom">
           <small class="font-monospace text-body-secondary text-uppercase">json5</small>
           <div class="d-flex ms-auto">
-            <button type="button" class="btn btn-outline-secondary btn-sm mt-0 me-0" aria-label="Copy to clipboard" data-bs-original-title="Copy to clipboard" title="" onclick="copyCode()">
+            <button type="button" class="btn btn-outline-secondary btn-sm mt-0 me-0" aria-label="Copy to clipboard" data-bs-original-title="Copy to clipboard" title="" onclick="copyCode(this)">
               Copy
             </button>
           </div>
@@ -21,9 +21,13 @@
     </div>
   </div>
   <script>
-    function copyCode() {
+    function copyCode(button) {
       const data = document.getElementById("exportData");
       navigator.clipboard.writeText(data.textContent);
+      button.innerText = "Copied";
+      setTimeout(() => {
+        button.innerText = "Copy";
+      }, 2000);
     }
   </script>
 </div>
