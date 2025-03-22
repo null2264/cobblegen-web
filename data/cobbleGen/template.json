@@ -9,7 +9,8 @@
         },
         "weight": {
             "type": "number",
-            "required": true
+            "required": true,
+            "default": 100
         },
         "minY": { "type": "integer" },
         "maxY": { "type": "integer" },

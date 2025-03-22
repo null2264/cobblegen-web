@@ -7,19 +7,19 @@
 
       {% if field.type == 'string' %}
         <input type="text" class="form-control" id="{{ field.key }}" name="{{ field.key }}" 
-          value="{{ data.get(field.key.split('.')[-1], '') }}" {% if field.required %}required{% endif %}>
+          value="{{ data.get(field.key, field.default if field.default != None else '') }}" {% if field.required %}required{% endif %}>
 
       {% elif field.type == 'number' or field.type == 'integer' %}
         <input type="number" class="form-control" id="{{ field.key }}" name="{{ field.key }}" 
-          value="{{ data.get(field.key.split('.')[-1], '') }}" {% if field.required %}required{% endif %} {% if field.type == 'number' %}step="0.1"{% endif %}>
+          value="{{ data.get(field.key, field.default if field.default != None else '') }}" {% if field.required %}required{% endif %} {% if field.type == 'number' %}step="0.1"{% endif %}>
 
       {% elif field.type == 'textarea' %}
-        <textarea class="form-control" id="{{ field.key }}" name="{{ field.key }}" {% if field.required %}required{% endif %}>{{ data.get(field.key.split('.')[-1], '') }}</textarea>
+        <textarea class="form-control" id="{{ field.key }}" name="{{ field.key }}" {% if field.required %}required{% endif %}>{{ data.get(field.key, '') }}</textarea>
 
       {% elif field.type == 'select' %}
         <select class="form-select" id="{{ field.key }}" name="{{ field.key }}" {% if field.required %}required{% endif %}>
           {% for option in field.options %}
-            <option value="{{ option }}" {% if data.get(field.key.split('.')[-1]) == option %}selected{% endif %}>
+            <option value="{{ option }}" {% if data.get(field.key) == option %}selected{% endif %}>
               {{ option }}
             </option>
           {% endfor %}

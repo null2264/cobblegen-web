@@ -35,5 +35,6 @@ def generate_form_fields(template):
             "label": config.get("description", field),
             "type": type_,
             "required": config.get("required", False),
+            "default": config.get("default", None),
         })
     return fields
