@@ -49,7 +49,12 @@
     let reader = new FileReader();
     reader.onload = () => {
       let json = Hjson.parse(reader.result);
-      console.log(json);
+      const types = [{% for entity in entities %}"{{ entity.name }}",{% endfor %}];
+      types.forEach(k => {
+        json[k].forEach(v => {
+          localStorage.setItem(`ref-gen:${k}:${crypto.randomUUID()}`, JSON.stringify(v));
+        });
+      });
     }
     reader.readAsText(file);
   }

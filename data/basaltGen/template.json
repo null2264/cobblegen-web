@@ -12,7 +12,37 @@
             "required": true
         },
         "minY": { "type": "integer" },
-        "maxY": { "type": "integer" }
+        "maxY": { "type": "integer" },
+        "dimensions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "excludedDimensions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "neighbours": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "excludedBiomes": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "biomes": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
     },
     "required": ["avatar", "name"]
 }

@@ -24,7 +24,7 @@ def apply_defaults(template):
 def generate_form_fields(template):
     fields = []
     for field, config in template["properties"].items():
-        type_ = config.get("type", "string")
+        type_ = config.get("type", "unsupported")
         if type_ == "string":
             format = config.get("format", "")
             if format == "uri":

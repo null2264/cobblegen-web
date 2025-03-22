@@ -1,10 +1,11 @@
+<!-- TODO: Handle field type array -->
 {% if data != None %}
 <form onsubmit="doSubmit(event)">
   {% for field in fields %}
     <div class="mb-3">
       <label for="{{ field.key }}" class="form-label">{{ field.label }}</label>
 
-      {% if field.type == 'text' or field.type == 'string' %}
+      {% if field.type == 'string' %}
         <input type="text" class="form-control" id="{{ field.key }}" name="{{ field.key }}" 
           value="{{ data.get(field.key.split('.')[-1], '') }}" {% if field.required %}required{% endif %}>
 
@@ -23,7 +24,12 @@
             </option>
           {% endfor %}
         </select>
+
+      {% else %}
+        <p><em>Not yet implemented</em></p>
+
       {% endif %}
+
     </div>
   {% endfor %}
   
