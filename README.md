@@ -10,7 +10,7 @@ uv run -- flask --app webapp run
 
 ## License
 
-This project is built based on [Bare Minimum Framework](https://github.com/Iteranya/bare-minimum-framework), which licensed under MIT (and GPL-3.0).
+This project is built based on [Bare Minimum Framework](https://github.com/Iteranya/bare-minimum-framework), which licensed under GPL-3.0.
 
 Unless stated otherwise, this project is licensed under the GNU General Public License, v. 3.0 or Later:
 
