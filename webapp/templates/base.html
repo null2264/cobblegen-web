@@ -44,6 +44,32 @@
   
   <script src="/static/js/bootstrap.min.js"></script>
   <script src="/static/js/htmx.min.js"></script>
+  <script>
+    function getGenerators(entityType) {
+      let gens = {};
+      for (var key in localStorage) {
+        if (!localStorage.hasOwnProperty(key)) continue;
+        if (!key.startsWith("ref-gen:")) continue;
+        if (entityType != null || entityType != undefined) {
+          if (!key.startsWith(`ref-gen:${entityType}:`)) continue;
+        }
+
+        let regex = /ref-gen:(.+):(.+)/;
+
+        try {
+          let json = JSON.parse(localStorage[key]);
+          json.name = key.replace(regex, "$2");
+          let type = key.replace(regex, "$1");
+          if (gens[type] === undefined) {
+            gens[type] = [];
+          }
+          gens[type].push(json);
+        } catch { continue; }
+      }
+      if (entityType != null || entityType != undefined) return JSON.stringify(gens[entityType] || []);
+      return JSON.stringify(gens);
+    }
+  </script>
   {% block body_after %}{% endblock %}
 </body>
 </html>

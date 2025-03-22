@@ -1,7 +1,37 @@
 {% extends "base.html" %}
 {% block title %} - Generator Types{% endblock %}
 {% block content %}
-  <h1 class="mb-4">Generator Types</h1>
+  <div id="export-modal"
+    class="modal modal-blur fade"
+    style="display: none"
+    aria-hidden="false"
+    tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body d-flex justify-content-center">
+          <em>Loading...</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Generator Types</h1>
+    <div class="btn-group">
+      <button
+      hx-get='/modal/export'
+      hx-vals='js:{"data": getGenerators()}'
+      hx-target="#export-modal"
+      hx-trigger="click"
+      data-bs-toggle="modal"
+      data-bs-target="#export-modal"
+      class="btn btn-primary">Export</button>
+
+      <a href="{{ url_for('create_entity', entity_type=entity_type) }}" class="btn btn-outline-primary">
+        Import
+      </a>
+    </div>
+  </div>
   <div class="list-group">
     {% for entity in entities %}
       <a href="{{ url_for('entity_dashboard', entity_type=entity.name) }}" class="list-group-item list-group-item-action">

@@ -8,24 +8,10 @@
     </a>
   </div>
 
-  <div hx-trigger="load" hx-get="/{{ entity_type }}" hx-vals='js:{"entities": [...getGenerators()]}' hx-swap="outerHTML">Loading...</div>
+  <div hx-trigger="load" hx-get="/{{ entity_type }}" hx-vals='js:{"entities": getGenerators("{{ entity_type }}")}' hx-swap="outerHTML">Loading...</div>
 {% endblock %}
 {% block body_after %}
 <script>
-  function getGenerators() {
-    let gens = [];
-    for (var key in localStorage) {
-      if (!localStorage.hasOwnProperty(key)) continue;
-      if (!key.startsWith("ref-gen:{{ entity_type }}:")) continue;
-      try {
-        let json = JSON.parse(localStorage[key]);
-        json.name = key.replace("ref-gen:{{ entity_type }}:", "");
-        gens.push(JSON.stringify(json));
-      } catch { continue; }
-    }
-    return gens;
-  }
-
   function doDelete(event, entity_name) {
     event.preventDefault();
 

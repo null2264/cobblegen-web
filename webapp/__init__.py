@@ -40,7 +40,8 @@ def entity_dashboard(entity_type):
             template = json.load(f)
         return render_template('dashboard.html', entity_type=entity_type, title=template.get("title", entity_type))
 
-    entities = [json.loads(entity) for entity in request.args.getlist("entities")]
+    entities_json = request.args.get("entities")
+    entities = json.loads(entities_json) if entities_json else {}
     return render_template('dashboard_partial.html', entity_type=entity_type, entities=entities)
 
 # --------------------------
@@ -92,3 +93,9 @@ def create_entity(entity_type):
                          fields=generate_form_fields(template),
                          title=template.get("title", entity_type),
                          data={})
+
+@app.route('/modal/export')
+def export_modal():
+    data_json = request.args.get("data")
+    data = json.loads(data_json) if data_json else {}
+    return render_template('export_modal.html', export_data=json.dumps(data, indent=4))
