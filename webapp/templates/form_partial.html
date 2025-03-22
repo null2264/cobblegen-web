@@ -10,7 +10,7 @@
 
       {% elif field.type == 'number' or field.type == 'integer' %}
         <input type="number" class="form-control" id="{{ field.key }}" name="{{ field.key }}" 
-          value="{{ data.get(field.key.split('.')[-1], '') }}" {% if field.required %}required{% endif %}>
+          value="{{ data.get(field.key.split('.')[-1], '') }}" {% if field.required %}required{% endif %} {% if field.type == 'number' %}step="0.1"{% endif %}>
 
       {% elif field.type == 'textarea' %}
         <textarea class="form-control" id="{{ field.key }}" name="{{ field.key }}" {% if field.required %}required{% endif %}>{{ data.get(field.key.split('.')[-1], '') }}</textarea>

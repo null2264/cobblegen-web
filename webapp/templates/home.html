@@ -27,9 +27,10 @@
       data-bs-target="#export-modal"
       class="btn btn-primary">Export</button>
 
-      <a href="{{ url_for('create_entity', entity_type=entity_type) }}" class="btn btn-outline-primary">
+      <input id="file-upload" class="d-none" type="file" onchange="readJsonFile(event)" accept=".json, .json5, .hjson" />
+      <label for="file-upload" class="btn btn-outline-primary">
         Import
-      </a>
+      </label>
     </div>
   </div>
   <div class="list-group">
@@ -39,4 +40,18 @@
       </a>
     {% endfor %}
   </div>
+{% endblock %}
+{% block body_after %}
+<script>
+  function readJsonFile(event) {
+    let files = event.target.files;
+    let file = files[0];
+    let reader = new FileReader();
+    reader.onload = () => {
+      let json = Hjson.parse(reader.result);
+      console.log(json);
+    }
+    reader.readAsText(file);
+  }
+</script>
 {% endblock %}
