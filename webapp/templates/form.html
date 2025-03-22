@@ -19,13 +19,23 @@
   function getGenerator() {
     return localStorage.getItem("ref-gen:{{ entity_type }}:{{ entity_name }}", "{}");
   }
+
+  const toNum = v => !!+v ? +v : v
+
   function doSubmit(event) {
     event.preventDefault();
 
     const data = new FormData(event.target);
 
     // Do a bit of work to convert the entries to a plain JS object
-    const value = Object.fromEntries(data.entries());
+    let value = {};
+    data.forEach(function(v, k) {
+      if (v === undefined || v === null || v === "") return;  // Omit empty value
+      // Naively try to turn every value to number
+      // FIXME: Only do so if input box type is number
+      value[k] = toNum(v);
+    });
+    console.log(data);
 
     {% if entity_name %}
     localStorage.setItem("ref-gen:{{ entity_type }}:{{ entity_name }}", JSON.stringify(value));
