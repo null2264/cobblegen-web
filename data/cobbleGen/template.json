@@ -11,9 +11,8 @@
             "type": "number",
             "required": true
         },
-        "minY": { "type": "string" },
-        "maxY": { "type": "string" },
-        "maxY": { "type": "string" }
+        "minY": { "type": "integer" },
+        "maxY": { "type": "integer" }
     },
     "required": ["avatar", "name"]
 }
