@@ -11,4 +11,4 @@ COPY . /app
 WORKDIR /app
 RUN uv sync --frozen --no-cache
 
-CMD ["/app/.venv/bin/gunicorn", "-w", "4", "-b", 0.0.0.0:80", "webapp:app"]
+CMD ["/app/.venv/bin/gunicorn", "-w", "4", "-b", "0.0.0.0:80", "webapp:app"]
