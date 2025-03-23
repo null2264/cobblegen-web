@@ -1,12 +1,12 @@
 {% macro add(entity_type, key) %}
 
-<div id="input-array-replace-me">
+<div class="input-array-replace-me" id="{{ key }}">
   <button
     class="btn btn-primary"
     onclick="event.preventDefault()"
     type="button"
     hx-get="{{ url_for('form_array_partial', entity_type=entity_type, key=key) }}"
-    hx-target="#input-array-replace-me"
+    hx-target=".input-array-replace-me#{{ key }}"
     hx-swap="outerHTML">
     Add
   </button>
