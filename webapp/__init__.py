@@ -1,5 +1,6 @@
 from typing import Any
 from flask import Flask, render_template, request, url_for
+from pathlib import Path
 import os
 import json
 from webapp.form_generator import generate_form_fields
@@ -22,10 +23,6 @@ def get_entities() -> list[Any]:
         entities.append({ "name": data, "title": template.get("title", data) })
     return entities
 
-@app.route('/favicon.ico')
-def favicon():
-    return url_for("static", file="favicon.ico")
-
 # --------------------------
 # Route: Home Dashboard (Entity Types)
 # --------------------------
@@ -39,7 +36,11 @@ def home():
 @app.route('/<entity_type>')
 def entity_dashboard(entity_type):
     if not is_htmx():
-        with open(f'data/{entity_type}/template.json') as f:
+        template_path = Path(f"data/{entity_type}/template.json")
+        if not template_path.exists():
+            return app.send_static_file(entity_type)
+
+        with template_path.open("r") as f:
             template = json.load(f)
         return render_template('dashboard.html', entity_type=entity_type, title=template.get("title", entity_type))
 
@@ -102,3 +103,7 @@ def export_modal():
     data_json = request.args.get("data")
     data = json.loads(data_json) if data_json else {}
     return render_template('export_modal.html', export_data=json.dumps(data, indent=4))
+
+@app.errorhandler(404)
+def four_o_four(_):
+    return render_template("404.html"), 404
