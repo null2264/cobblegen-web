@@ -1,5 +1,5 @@
 from typing import Any
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 import os
 import json
 from webapp.form_generator import generate_form_fields
@@ -21,6 +21,10 @@ def get_entities() -> list[Any]:
 
         entities.append({ "name": data, "title": template.get("title", data) })
     return entities
+
+@app.route('/favicon.ico')
+def favicon():
+    return url_for("static", file="favicon.ico")
 
 # --------------------------
 # Route: Home Dashboard (Entity Types)
