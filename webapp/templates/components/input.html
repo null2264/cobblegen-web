@@ -1,0 +1,29 @@
+{% macro field(key, value=None, type='unsupported', options=[], default=None, is_required=False) %}
+
+{% if type == 'string' %}
+  <input type="text" class="form-control" id="{{ key }}" name="{{ key }}"
+    value="{{ value or default or '' }}" {% if is_required %}required{% endif %}>
+
+{% elif type == 'number' or type == 'integer' %}
+  <input type="number" class="form-control" id="{{ key }}" name="{{ key }}"
+    value="{{ value or default or '' }}" {% if is_required %}required{% endif %} {% if type == 'number' %}step="0.1"{% endif %}>
+
+{% elif type == 'textarea' %}
+  <textarea class="form-control" id="{{ key }}" name="{{ key }}" {% if is_required %}required{% endif %}>{{ value or default or '' }}</textarea>
+
+{% elif type == 'select' %}
+  <select class="form-select" id="{{ key }}" name="{{ key }}" {% if is_required %}required{% endif %}>
+    {% for option in options %}
+      <option value="{{ option }}" {% if (value or default) == option %}selected{% endif %}>
+        {{ option }}
+      </option>
+    {% endfor %}
+  </select>
+
+{% else %}
+  <p><em>Not yet implemented</em></p>
+  <input type="text" class="form-control d-none input-type-object" id="{{ key }}" name="{{ key }}"
+    value="{{ value or default or '' }}" {% if is_required %}required{% endif %} readonly>
+
+{% endif %}
+{%- endmacro %}
