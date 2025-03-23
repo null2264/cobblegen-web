@@ -22,35 +22,63 @@
 
   const toNum = v => !!+v ? +v : v
 
+  function getDataFromElement(element) {
+    if (element.type === "checkbox") {
+      return element.checked;
+    }
+
+    if (element.type === "radio" && element.checked) {
+      return element.value;
+    }
+
+    if (element.type === "select-multiple") {
+      const selectedValues = Array.from(element.selectedOptions).map(option => option.value);
+      return selectedValues;
+    } 
+
+    if (element.value !== "") {
+      let value = element.value;
+      if (element.type === "number") {
+        value = toNum(value);
+      } else if (element.classList.contains("input-type-object")) {
+        try {
+          value = Hjson.parse(value);
+        } catch {
+          return null;
+        }
+      }
+      return value;
+    }
+  }
+
   function doSubmit(event) {
     event.preventDefault();
 
     const data = {};
-    const formElements = event.target.querySelectorAll("input, select, textarea");
+    const formElements = event.target.querySelectorAll(":scope > div > input, :scope > div > select, :scope > div > textarea, :scope > div > .input-array");
 
     formElements.forEach(element => {
-      if (!element.name) return;
+      if (!element.name && element.className !== "input-array") return;
 
-      if (element.type === "checkbox") {
-        data[element.name] = element.checked;
-      } else if (element.type === "radio") {
-        if (element.checked) {
-          data[element.name] = element.value;
-        }
-      } else if (element.type === "select-multiple") {
-        const selectedValues = Array.from(element.selectedOptions).map(option => option.value);
-        data[element.name] = selectedValues;
-      } else if (element.value != "") {
-        let value = element.value;
-        if (element.type === "number") {
-          value = toNum(value);
-        } else if (element.classList.contains("input-type-object")) {
-          try {
-            value = Hjson.parse(value);
-          } catch {}
-        }
-        data[element.name] = value;
+      if (element.className === "input-array") {
+        const arrayElements = element.querySelectorAll(":scope > .input-array-item > input, :scope > .input-array-item > select, :scope > .input-array-item > textarea");
+        let itemValues = [];
+        arrayElements.forEach(element_2 => {
+          elementFromData = getDataFromElement(element_2);
+          if (elementFromData === undefined || elementFromData === null) return;
+
+          itemValues.push(elementFromData);
+        });
+        if (itemValues.length === 0) return;
+
+        data[arrayElements[0].name] = itemValues;
+        return;
       }
+
+      elementFromData = getDataFromElement(element);
+      if (elementFromData === undefined || elementFromData === null) return;
+
+      data[element.name] = elementFromData
     });
 
     {% if entity_name %}

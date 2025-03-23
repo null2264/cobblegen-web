@@ -21,20 +21,25 @@ def apply_defaults(template):
     return defaults
 
 
+def normalize_type(raw_type: str, format: str = "") -> str:
+    if raw_type == "string":
+        if format == "uri":
+            return "file"
+    return raw_type
+
+
 def generate_form_fields(template):
     fields = []
-    for field, config in template["properties"].items():
-        type_ = config.get("type", "unsupported")
-        if type_ == "string":
-            format = config.get("format", "")
-            if format == "uri":
-                type_ = "file"
-
-        fields.append({
-            "key": field,
-            "label": config.get("description", field),
-            "type": type_,
+    for key, config in template["properties"].items():
+        items = config.get("items")
+        field = {
+            "key": key,
+            "label": config.get("description", key),
+            "type": normalize_type(config.get("type", "unsupported"), config.get("format", "")),
             "required": config.get("required", False),
             "default": config.get("default", None),
-        })
+            "items_type": normalize_type(items.get("type", "unsupported"), items.get("format", "")) if items is not None else None,
+        }
+
+        fields.append(field)
     return fields

@@ -1,13 +1,22 @@
 {% import 'components/input.html' as input %}
+{% import 'form_partial_macro.html' as input_array %}
 
-<!-- TODO: Handle field type array -->
 {% if data != None %}
 <form onsubmit="doSubmit(event)">
   {% for field in fields %}
     <div class="mb-3">
       <label for="{{ field.key }}" class="form-label">{{ field.label }}</label>
 
+      {% if field.type == "array" %}
+      <div class="input-array">
+        {% for item in data.get(field.key, []) %}
+        {{ input_array.add_item(input, field.key, item, field.items_type, field.options if field.items_type == 'select' else [], field.default, True) }}
+        {% endfor %}
+        {{ input_array.add(entity_type, field.key) }}
+      </div>
+      {% else %}
       {{ input.field(field.key, data.get(field.key), field.type, field.options if field.type == 'select' else [], field.default, field.required) }}
+      {% endif %}
 
     </div>
   {% endfor %}

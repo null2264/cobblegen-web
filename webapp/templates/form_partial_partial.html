@@ -1,0 +1,5 @@
+{% import 'components/input.html' as input %}
+{% import 'form_partial_macro.html' as input_array %}
+
+{{ input_array.add_item(input, key, "", type, options if type == 'select' else [], default, is_required) }}
+{{ input_array.add(entity_type, key) }}

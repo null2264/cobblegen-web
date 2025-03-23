@@ -1,9 +1,9 @@
 from typing import Any
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 from pathlib import Path
 import os
 import json
-from webapp.form_generator import generate_form_fields
+from webapp.form_generator import generate_form_fields, normalize_type
 
 
 app = Flask(__name__, static_folder = '../static')
@@ -97,6 +97,23 @@ def create_entity(entity_type):
                          fields=generate_form_fields(template),
                          title=template.get("title", entity_type),
                          data={})
+
+@app.route('/<entity_type>/form_array_partial/<key>')
+def form_array_partial(entity_type, key):
+    with open(f'data/{entity_type}/template.json') as f:
+        template = json.load(f)
+
+    config = template["properties"][key].get("items")
+
+    return render_template(
+        'form_partial_partial.html',
+        entity_type=entity_type,
+        key=key,
+        type=normalize_type(config.get("type", "unsupported")),
+        default=None,
+        options=[],
+        is_required=True,
+    )
 
 @app.route('/modal/export')
 def export_modal():

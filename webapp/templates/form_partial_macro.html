@@ -1,0 +1,24 @@
+{% macro add(entity_type, key) %}
+
+<div id="input-array-replace-me">
+  <button
+    class="btn btn-primary"
+    onclick="event.preventDefault()"
+    type="button"
+    hx-get="{{ url_for('form_array_partial', entity_type=entity_type, key=key) }}"
+    hx-target="#input-array-replace-me"
+    hx-swap="outerHTML">
+    Add
+  </button>
+</div>
+
+{%- endmacro %}
+
+{% macro add_item(input, key, item, items_type, options, default, is_required) %}
+
+<div class="input-array-item d-flex gap-2 mb-2">
+  <button class="btn btn-danger" onclick="event.preventDefault(); this.parentElement.remove()" type="button">Delete</button>
+  {{ input.field(key, item, items_type, options, default, is_required) }}
+</div>
+
+{%- endmacro %}
