@@ -6,7 +6,7 @@
 
 {% elif type == 'number' or type == 'integer' %}
   <input type="number" class="form-control" id="{{ key }}" name="{{ key }}"
-    value="{{ value or default or '' }}" {% if is_required %}required{% endif %} {% if type == 'number' %}step="0.1"{% endif %}>
+    value="{{ value if value != None else (default if default != None else '') }}" {% if is_required %}required{% endif %} {% if type == 'number' %}step="0.1"{% endif %}>
 
 {% elif type == 'textarea' %}
   <textarea class="form-control" id="{{ key }}" name="{{ key }}" {% if is_required %}required{% endif %}>{{ value or default or '' }}</textarea>
