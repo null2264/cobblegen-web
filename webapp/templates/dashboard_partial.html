@@ -17,10 +17,12 @@
               {% endif %}
             {% endif %}
             {% if entity.get("minY") != None %}
-            <a>Min Y: {{ entity.minY }}{% if entity.get("maxY") == None %} (Generate from y level {{ entity.minY + 1 }} up to height limit){% endif %}</a>
+              {% if entity.get("maxY") == None %}<a>Y Level: Generate from y level {{ entity.minY + 1 }} up to height limit</a>{% endif %}
+              <a>Min Y: {{ entity.minY }}</a>
             {% endif %}
             {% if entity.get("maxY") != None %}
-            <a>Max Y: {{ entity.maxY }}{% if entity.get("minY") == None %} (Generate from y level {{ entity.maxY - 1 }} down to void){% endif %}</a>
+              {% if entity.get("minY") == None %}<a>Y Level: Generate from y level {{ entity.maxY - 1 }} down to void</a>{% endif %}
+              <a>Max Y: {{ entity.maxY }}</a>
             {% endif %}
             </div>
           </div>
