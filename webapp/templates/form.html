@@ -20,8 +20,8 @@
     return localStorage.getItem("ref-gen:{{ entity_type }}:{{ entity_name }}", "{}");
   }
 
-  function toNum(v) {
-    let potentialNum = parseFloat(v);
+  function toNum(v, step) {
+    let potentialNum = step === "" ? parseInt(v) : parseFloat(v);
     return isNaN(potentialNum) ? v : potentialNum;
   }
 
@@ -42,7 +42,7 @@
     if (element.value !== "") {
       let value = element.value;
       if (element.type === "number") {
-        value = toNum(value);
+        value = toNum(value, element.step);
       } else if (element.classList.contains("input-type-object")) {
         try {
           value = Hjson.parse(value);
