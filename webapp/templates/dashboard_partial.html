@@ -1,3 +1,5 @@
+{% import 'dashboard_partial_macro.html' as macro %}
+
 <div class="row row-cols-1 row-cols-md-3 g-4">
   {% for entity in entities %}
   <div class="col">
@@ -24,6 +26,11 @@
               {% if entity.get("minY") == None %}<a>Y Level: Generate from y level {{ entity.maxY - 1 }} down to void</a>{% endif %}
               <a>Max Y: {{ entity.maxY }}</a>
             {% endif %}
+            {{ macro.list("Dimensions (Whitelist)", entity.dimensions) }}
+            {{ macro.list("Dimensions (Blacklist)", entity.excludedDimensions) }}
+            {{ macro.list("Biomes (Whitelist)", entity.biomes) }}
+            {{ macro.list("Biomes (Blacklist)", entity.excludedBiomes) }}
+            {{ macro.list("Neighbours (Currently not being used)", entity.neighbours) }}
             </div>
           </div>
         </div>
