@@ -20,7 +20,10 @@
     return localStorage.getItem("ref-gen:{{ entity_type }}:{{ entity_name }}", "{}");
   }
 
-  const toNum = v => !!+v ? +v : v
+  function toNum(v) {
+    let potentialNum = parseInt(v);
+    return isNaN(potentialNum) ? v : potentialNum;
+  }
 
   function getDataFromElement(element) {
     if (element.type === "checkbox") {

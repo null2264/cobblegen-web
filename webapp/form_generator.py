@@ -30,13 +30,14 @@ def normalize_type(raw_type: str, format: str = "") -> str:
 
 def generate_form_fields(template):
     fields = []
+    required_fields = template.get("required", [])
     for key, config in template["properties"].items():
         items = config.get("items")
         field = {
             "key": key,
             "label": config.get("description", key),
             "type": normalize_type(config.get("type", "unsupported"), config.get("format", "")),
-            "required": config.get("required", False),
+            "required": key in required_fields,
             "default": config.get("default", None),
             "items_type": normalize_type(items.get("type", "unsupported"), items.get("format", "")) if items is not None else None,
         }

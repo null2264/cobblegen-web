@@ -3,13 +3,9 @@
     "title": "BasaltGen",
     "type": "object",
     "properties": {
-        "id": {
-            "type": "string",
-            "required": true
-        },
+        "id": { "type": "string" },
         "weight": {
             "type": "number",
-            "required": true,
             "default": 100
         },
         "minY": { "type": "integer" },
@@ -43,7 +39,8 @@
             "items": {
                 "type": "string"
             }
-        }
+        },
+        "modifier": { "type": "string" }
     },
-    "required": ["avatar", "name"]
+    "required": ["id", "weight"]
 }

@@ -119,6 +119,24 @@ def form_array_partial(entity_type, key):
 def export_modal():
     data_json = request.args.get("data")
     data = json.loads(data_json) if data_json else {}
+    data["customGen"] = {}
+    for k, v in data.items():
+        if not Path(f"data/{k}/").exists():
+            continue
+
+        for gen in v:
+            if not gen.get("modifier"):
+                continue
+
+            v.remove(gen)
+
+            if k not in data["customGen"]:
+                data["customGen"][k] = {}
+
+            if gen["modifier"] not in data["customGen"][k]:
+                data["customGen"][k][gen["modifier"]] = []
+
+            data["customGen"][k][gen["modifier"]].append(gen)
     return render_template('export_modal.html', export_data=json.dumps(data, indent=4))
 
 @app.errorhandler(404)

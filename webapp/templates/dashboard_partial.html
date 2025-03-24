@@ -6,16 +6,34 @@
         <div class="col">
           <div class="card-body h-100 w-100">
             <h5 class="card-title">{{ entity.id }}</h5>
-            <p class="card-text">{{ entity.description }}</p>
+            <div class="card-text d-flex flex-column">
+            {% if entity.modifier %}<a>Modifier: {{ entity.modifier }}</a>{% endif %}
+            {% if entity.get("minY") != None and entity.get("maxY") != None %}
+              {% if entity.maxY - 1 <= entity.minY + 1 %}
+              <a>Y Level: Generate from y level {{ entity.maxY - 1 }} to {{ entity.minY + 1 }}</a>
+              {% else %}
+              <a class="text-decoration-none text-danger">Y Level: Invalid! This block may not be able to generate.</a>
+              <a class="text-decoration-none text-danger">Because max Y minus 1 is greater than or equals to min Y plus 1: <b>Max Y {{ entity.maxY - 1 }} ≥ Min Y {{ entity.minY + 1 }}</b></a>
+              {% endif %}
+            {% endif %}
+            {% if entity.get("minY") != None %}
+            <a>Min Y: {{ entity.minY }}{% if entity.get("maxY") == None %} (Generate from y level {{ entity.minY + 1 }} up to height limit){% endif %}</a>
+            {% endif %}
+            {% if entity.get("maxY") != None %}
+            <a>Max Y: {{ entity.maxY }}{% if entity.get("minY") == None %} (Generate from y level {{ entity.maxY - 1 }} down to void){% endif %}</a>
+            {% endif %}
+            </div>
           </div>
         </div>
-        <div class="col-auto d-flex flex-column justify-content-between gap-2">
+        <div class="col-auto d-flex flex-column justify-content-start gap-2">
+          <div class="text-center border border-1">
+            <small class="font-monospace text-body-secondary text-uppercase border-0 border-bottom">weight</small>
+            <h3 class="mb-0 text-break">{{ entity.weight }}</h3>
+          </div>
           <a href="{{ url_for('edit_entity', entity_type=entity_type, entity_name=entity.name) }}" class="btn btn-secondary btn-sm">
             Edit
           </a>
-          <form onsubmit='doDelete(event, "{{ entity.name }}")'>
-            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-          </form>
+          <button type="submit" class="btn btn-danger btn-sm" onclick='doDelete(event, "{{ entity.name }}")'>Delete</button>
         </div>
       </div>
     </div>
