@@ -4,17 +4,49 @@
       <h5 class="modal-title">CobbleGen Configuration</h5>
     </div>
     <div class="modal-body">
-      <div class="border-0 border-start border-end border-bottom">
-        <div class="d-flex align-items-center highlight-toolbar ps-3 pe-2 py-1 border-0 border-top border-bottom">
-          <small class="font-monospace text-body-secondary text-uppercase">json5</small>
-          <div class="d-flex ms-auto">
-            <button type="button" class="btn btn-outline-secondary btn-sm mt-0 me-0" aria-label="Copy to clipboard" data-bs-original-title="Copy to clipboard" title="" onclick="copyCode(this)">
-              Copy
-            </button>
+
+      <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#v1_0-tab-pane" type="button" role="tab" aria-selected="true">Format v1.0</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#v1_1-tab-pane" type="button" role="tab" aria-selected="false">Format v1.1</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="v1_0-tab-pane" role="tabpanel" tabindex="0">
+
+          <div class="border-0 border-start border-end border-bottom">
+            <div class="d-flex align-items-center highlight-toolbar ps-3 pe-2 py-1 border-0 border-top border-bottom">
+              <small class="font-monospace text-body-secondary text-uppercase">json5</small>
+              <div class="d-flex ms-auto">
+                <button type="button" class="btn btn-outline-secondary btn-sm mt-0 me-0" aria-label="Copy to clipboard" data-bs-original-title="Copy to clipboard" title="" onclick="copyCode(this)">
+                  Copy
+                </button>
+              </div>
+            </div>
+            <pre class="p-3"><code id="exportData">{{ v1_0 }}</code></pre>
           </div>
+
         </div>
-        <pre class="p-3"><code id="exportData">{{ export_data }}</code></pre>
+        <div class="tab-pane fade" id="v1_1-tab-pane" role="tabpanel" tabindex="0">
+
+          <div class="border-0 border-start border-end border-bottom">
+            <div class="d-flex align-items-center highlight-toolbar ps-3 pe-2 py-1 border-0 border-top border-bottom">
+              <small class="font-monospace text-body-secondary text-uppercase">json5</small>
+              <div class="d-flex ms-auto">
+                <button type="button" class="btn btn-outline-secondary btn-sm mt-0 me-0" aria-label="Copy to clipboard" data-bs-original-title="Copy to clipboard" title="" onclick="copyCode(this)">
+                  Copy
+                </button>
+              </div>
+            </div>
+            <pre class="p-3"><code id="exportData">{{ v1_1 }}</code></pre>
+          </div>
+
+        </div>
       </div>
+
+
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -22,7 +54,7 @@
   </div>
   <script>
     function copyCode(button) {
-      const data = document.getElementById("exportData");
+      const data = button.parentElement.parentElement.parentElement.getElementsByTagName("code")[0]
       navigator.clipboard.writeText(data.textContent);
       button.innerText = "Copied";
       setTimeout(() => {
