@@ -127,7 +127,9 @@ def export_modal():
         if not Path(f"data/{k}/").exists():
             continue
 
-        for gen in v:
+        generators = copy.deepcopy(v)
+
+        for gen in generators:
             if not gen.get("modifier"):
                 continue
 
@@ -142,6 +144,8 @@ def export_modal():
                 v1_0["customGen"][k][modifier] = []
 
             v1_0["customGen"][k][modifier].append(gen)
+    v1_0 = dict((key, value) for key, value in v1_0.items() if len(value))
+
     v1_1 = copy.deepcopy(data)
     v1_1["formatVersion"] = "1.1"
     return render_template('export_modal.html', v1_0=json.dumps(v1_0, indent=4), v1_1=json.dumps(v1_1, indent=4))
