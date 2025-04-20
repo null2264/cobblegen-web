@@ -29,7 +29,7 @@ def get_entities() -> list[Any]:
 # --------------------------
 @app.route('/')
 def home():
-    return render_template('home.html', entities=get_entities())
+    return render_template('home.html.jinja', entities=get_entities())
 
 # --------------------------
 # Route: Entity Type Dashboard
@@ -43,11 +43,11 @@ def entity_dashboard(entity_type):
 
         with template_path.open("r") as f:
             template = json.load(f)
-        return render_template('dashboard.html', entity_type=entity_type, title=template.get("title", entity_type))
+        return render_template('dashboard.html.jinja', entity_type=entity_type, title=template.get("title", entity_type))
 
     entities_json = request.args.get("entities")
     entities = json.loads(entities_json) if entities_json else {}
-    return render_template('dashboard_partial.html', entity_type=entity_type, entities=entities)
+    return render_template('dashboard_partial.html.jinja', entity_type=entity_type, entities=entities)
 
 # --------------------------
 # Route: Edit Entity
@@ -59,7 +59,7 @@ def edit_entity(entity_type, entity_name):
         template = json.load(f)
 
     if not is_htmx():
-        return render_template('form.html',
+        return render_template('form.html.jinja',
                              entity_type=entity_type,
                              entity_name=entity_name,
                              fields=generate_form_fields(template),
@@ -68,7 +68,7 @@ def edit_entity(entity_type, entity_name):
 
     entity_json = request.args.get("entity")
     entity = json.loads(entity_json) if entity_json else {}
-    return render_template('form_partial.html',
+    return render_template('form_partial.html.jinja',
                          entity_type=entity_type,
                          entity_name=entity_name,
                          fields=generate_form_fields(template),
@@ -85,14 +85,14 @@ def create_entity(entity_type):
         template = json.load(f)
 
     if not is_htmx():
-        return render_template('form.html',
+        return render_template('form.html.jinja',
                              entity_type=entity_type,
                              entity_name="",
                              fields=generate_form_fields(template),
                              title=template.get("title", entity_type),
                              data={})
 
-    return render_template('form_partial.html',
+    return render_template('form_partial.html.jinja',
                          entity_type=entity_type,
                          entity_name="",
                          fields=generate_form_fields(template),
@@ -107,7 +107,7 @@ def form_array_partial(entity_type, key):
     config = template["properties"][key].get("items")
 
     return render_template(
-        'form_partial_partial.html',
+        'form_partial_partial.html.jinja',
         entity_type=entity_type,
         key=key,
         type=normalize_type(config.get("type", "unsupported")),
@@ -148,8 +148,8 @@ def export_modal():
 
     v1_1 = copy.deepcopy(data)
     v1_1["formatVersion"] = "1.1"
-    return render_template('export_modal.html', v1_0=json.dumps(v1_0, indent=4), v1_1=json.dumps(v1_1, indent=4))
+    return render_template('export_modal.html.jinja', v1_0=json.dumps(v1_0, indent=4), v1_1=json.dumps(v1_1, indent=4))
 
 @app.errorhandler(404)
 def four_o_four(_):
-    return render_template("404.html"), 404
+    return render_template("404.html.jinja"), 404
