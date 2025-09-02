@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html.jinja" %}
 {% block title %} - {{ "Create" if not entity_name else "Edit" }} {{ title }}{% endblock %}
 {% block content %}
   <h1 class="mb-4">{{ "Create" if not entity_name else "Edit" }} {{ title }}</h1>
