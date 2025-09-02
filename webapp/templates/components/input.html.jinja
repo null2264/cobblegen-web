@@ -1,8 +1,8 @@
-{% macro field(key, value=None, type='unsupported', options=[], default=None, is_required=False) %}
+{% macro field(key, value=None, type='unsupported', options=[], default=None, is_required=False, pattern=None) %}
 
 {% if type == 'string' %}
   <input type="text" class="form-control" id="{{ key }}" name="{{ key }}"
-    value="{{ value or default or '' }}" {% if is_required %}required{% endif %}>
+    value="{{ value or default or '' }}" {% if pattern %}pattern="{{ pattern }}" {% endif %}{% if is_required %}required{% endif %}>
 
 {% elif type == 'number' or type == 'integer' %}
   <input type="number" class="form-control" id="{{ key }}" name="{{ key }}"

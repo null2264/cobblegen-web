@@ -3,7 +3,10 @@
     "title": "CobbleGen",
     "type": "object",
     "properties": {
-        "id": { "type": "string" },
+        "id": {
+            "type": "string",
+            "pattern": "\\w:\\w"
+        },
         "weight": {
             "type": "number",
             "default": 100
@@ -13,34 +16,42 @@
         "dimensions": {
             "type": "array",
             "items": {
-                "type": "string"
+                "type": "string",
+                "pattern": "\\w:\\w"
             }
         },
         "excludedDimensions": {
             "type": "array",
             "items": {
-                "type": "string"
+                "type": "string",
+                "pattern": "\\w:\\w"
             }
         },
         "neighbours": {
             "type": "array",
             "items": {
-                "type": "string"
+                "type": "string",
+                "pattern": "\\w:\\w"
             }
         },
         "excludedBiomes": {
             "type": "array",
             "items": {
-                "type": "string"
+                "type": "string",
+                "pattern": "\\w:\\w"
             }
         },
         "biomes": {
             "type": "array",
             "items": {
-                "type": "string"
+                "type": "string",
+                "pattern": "\\w:\\w"
             }
         },
-        "modifier": { "type": "string" }
+        "modifier": {
+            "type": "string",
+            "pattern": "\\w:\\w"
+        }
     },
     "required": ["id", "weight"]
 }

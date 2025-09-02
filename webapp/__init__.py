@@ -114,6 +114,7 @@ def form_array_partial(entity_type, key):
         default=None,
         options=[],
         is_required=True,
+        pattern=config.get("pattern"),
     )
 
 @app.route('/modal/export')

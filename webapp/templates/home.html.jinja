@@ -49,21 +49,26 @@
     let reader = new FileReader();
     reader.onload = () => {
       let json = Hjson.parse(reader.result);
+
+      const version = json["formatVersion"];
+
       let customGenRoot = json["customGen"];
 
       const types = [{% for entity in entities %}"{{ entity.name }}",{% endfor %}];
 
       types.forEach(k => {
         // Add v1.0 custom generators to basic generators
-        let customGen = customGenRoot[k] ?? {};
-        Object.keys(customGen).forEach(modifier => {
-          if (!json.hasOwnProperty(k)) json[k] = [];
-          let gens = customGen[modifier] ?? [];
-          gens.forEach(gen => {
-            gen.modifier = modifier;
-            json[k].push(gen);
-          })
-        });
+        if (version === "1.0") {
+          let customGen = customGenRoot[k] ?? {};
+          Object.keys(customGen).forEach(modifier => {
+            if (!json.hasOwnProperty(k)) json[k] = [];
+            let gens = customGen[modifier] ?? [];
+            gens.forEach(gen => {
+              gen.modifier = modifier;
+              json[k].push(gen);
+            })
+          });
+        }
 
         // Save the generators to the browser data storage
         (json[k] ?? []).forEach(v => {

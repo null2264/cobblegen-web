@@ -40,6 +40,7 @@ def generate_form_fields(template):
             "required": key in required_fields,
             "default": config.get("default", None),
             "items_type": normalize_type(items.get("type", "unsupported"), items.get("format", "")) if items is not None else None,
+            "pattern": config.get("pattern", None),
         }
 
         fields.append(field)

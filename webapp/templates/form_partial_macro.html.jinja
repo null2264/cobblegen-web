@@ -14,11 +14,11 @@
 
 {%- endmacro %}
 
-{% macro add_item(input, key, item, items_type, options, default, is_required) %}
+{% macro add_item(input, key, item, items_type, options, default, is_required, pattern) %}
 
 <div class="input-array-item d-flex gap-2 mb-2">
   <button class="btn btn-danger" onclick="event.preventDefault(); this.parentElement.remove()" type="button">Delete</button>
-  {{ input.field(key, item, items_type, options, default, is_required) }}
+  {{ input.field(key, item, items_type, options, default, is_required, pattern) }}
 </div>
 
 {%- endmacro %}
