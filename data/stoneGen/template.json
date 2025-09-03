@@ -5,7 +5,8 @@
     "properties": {
         "id": {
             "type": "string",
-            "pattern": "\\w:\\w"
+            "pattern": "\\w+:\\w+",
+            "validityNotice": "Must be in the format modid:id (example: minecraft:cobblestone)"
         },
         "weight": {
             "type": "number",
@@ -17,40 +18,46 @@
             "type": "array",
             "items": {
                 "type": "string",
-                "pattern": "\\w:\\w"
+                "pattern": "\\w+:\\w+",
+                "validityNotice": "Must be in the format modid:id (example: minecraft:cobblestone)"
             }
         },
         "excludedDimensions": {
             "type": "array",
             "items": {
                 "type": "string",
-                "pattern": "\\w:\\w"
+                "pattern": "\\w+:\\w+",
+                "validityNotice": "Must be in the format modid:id (example: minecraft:cobblestone)"
             }
         },
         "neighbours": {
             "type": "array",
             "items": {
                 "type": "string",
-                "pattern": "\\w:\\w"
+                "pattern": "\\w+:\\w+",
+                "validityNotice": "Must be in the format modid:id (example: minecraft:cobblestone)"
             }
         },
         "excludedBiomes": {
             "type": "array",
             "items": {
                 "type": "string",
-                "pattern": "\\w:\\w"
+                "pattern": "\\w+:\\w+",
+                "validityNotice": "Must be in the format modid:id (example: minecraft:cobblestone)"
             }
         },
         "biomes": {
             "type": "array",
             "items": {
                 "type": "string",
-                "pattern": "\\w:\\w"
+                "pattern": "\\w+:\\w+",
+                "validityNotice": "Must be in the format modid:id (example: minecraft:cobblestone)"
             }
         },
         "modifier": {
             "type": "string",
-            "pattern": "\\w:\\w"
+            "pattern": "\\w+:\\w+",
+            "validityNotice": "Must be in the format modid:id (example: minecraft:cobblestone)"
         }
     },
     "required": ["id", "weight"]

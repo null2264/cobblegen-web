@@ -10,12 +10,12 @@
       {% if field.type == "array" %}
       <div class="input-array">
         {% for item in data.get(field.key, []) %}
-        {{ input_array.add_item(input, field.key, item, field.items_type, field.options if field.items_type == 'select' else [], field.default, True, field.pattern) }}
+        {{ input_array.add_item(input, field.key, item, field.items_type, field.options if field.items_type == 'select' else [], field.default, True, field.pattern, field.validity_notice) }}
         {% endfor %}
         {{ input_array.add(entity_type, field.key) }}
       </div>
       {% else %}
-      {{ input.field(field.key, data.get(field.key), field.type, field.options if field.type == 'select' else [], field.default, field.required, field.pattern) }}
+      {{ input.field(field.key, data.get(field.key), field.type, field.options if field.type == 'select' else [], field.default, field.required, field.pattern, field.validity_notice) }}
       {% endif %}
 
     </div>
